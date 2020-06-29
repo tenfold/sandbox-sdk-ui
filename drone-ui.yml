@@ -52,5 +52,5 @@ steps:
   commands:
   - cd ./sandbox-sdk-app
   -  npm run build --prod
-  
+
 ...
