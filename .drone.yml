@@ -21,6 +21,8 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
+      - apt-get update
+      - sudo apt-get install chromium-browser -y
       - cd ./sandbox-sdk-app
       - npm install
       - npm install -g @angular/cli
@@ -48,7 +50,3 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run build --prod
-
-services:
-  selenium:
-    image: selenium/standalone-chrome
