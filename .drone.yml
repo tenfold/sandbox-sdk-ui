@@ -34,7 +34,7 @@ steps:
       - npm run lint
 
   - name: tests-unit
-    depends_on: [install]
+    depends_on: [tests-lint, chrome]
     pull: if-not-exists
     image: node:12.11.1
     commands:
@@ -42,7 +42,7 @@ steps:
       - npm run test
 
   - name: build
-    depends_on: [install]
+    depends_on: [tests-unit]
     pull: if-not-exists
     image: node:12.11.1
     commands:
