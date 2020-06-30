@@ -27,6 +27,12 @@ steps:
       - echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
       - apt-get -y update
       - apt-get -y install google-chrome-stable
+      - wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+      - unzip chromedriver_linux64.zip
+      - mv chromedriver /usr/bin/chromedriver
+      - chown root:root /usr/bin/chromedriver
+      - chmod +x /usr/bin/chromedriver
+      - chromedriver --url-base=/wd/hub
       - cd ./sandbox-sdk-app
       - npm install
       - npm install -g @angular/cli
