@@ -22,6 +22,7 @@ steps:
     image: node:12.11.1
     commands:
       - npm install
+      - npm install -g angular-cli
 
   - name: tests-lint
     depends_on: [install]
