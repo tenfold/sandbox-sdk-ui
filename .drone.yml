@@ -9,11 +9,6 @@ platform:
 clone:
   disable: true
 
-trigger:
-  event:
-    - pull_request
-    - tag
-
 steps:
   - name: git
     pull: always
@@ -35,7 +30,7 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run lint
-      - echo fooasdasd
+      - echo fooasdasdasdasasddas
 
   - name: tests-unit
     depends_on: [install]
