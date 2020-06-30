@@ -33,6 +33,7 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
+      - cd ./sandbox-sdk-app
       - npm run lint
       - echo fooasdasd
 
@@ -41,6 +42,7 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
+      - cd ./sandbox-sdk-app
       - npm run test
 
   - name: build
@@ -48,4 +50,5 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
+      - cd ./sandbox-sdk-app
       - npm run build --prod
