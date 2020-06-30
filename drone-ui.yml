@@ -35,7 +35,8 @@ steps:
   image: node:12.11.1
   commands:
   - cd ./sandbox-sdk-app
-  -  npm run lint
+  - npm run lint
+  - echo full
 
 - name: tests-unit
   depends_on: [ install ]
