@@ -42,7 +42,7 @@ steps:
     commands:
       - npm run test
 
-  - name: tests-unit
+  - name: build
     depends_on: [install]
     pull: if-not-exists
     image: node:12.11.1
