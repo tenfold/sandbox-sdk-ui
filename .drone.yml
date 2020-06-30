@@ -23,7 +23,7 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm install
-      - npm install -g angular-cli
+      - npm install angular-cli
 
   - name: tests-lint
     depends_on: [install]
