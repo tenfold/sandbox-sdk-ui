@@ -6,6 +6,10 @@ platform:
   os: linux
   arch: amd64
 
+services:
+  chrome:
+    image: selenium/node-chrome
+
 clone:
   disable: true
 
