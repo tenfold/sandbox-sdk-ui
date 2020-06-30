@@ -46,6 +46,8 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run test
+    environment:
+      CHROME_BIN: /usr/bin/google-chrome
 
   - name: build
     depends_on: [tests-unit]
