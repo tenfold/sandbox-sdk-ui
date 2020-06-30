@@ -21,8 +21,6 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
-      - apt-get update
-      - apt-get install libx11-xcb1
       - cd ./sandbox-sdk-app
       - npm install
       - npm install -g @angular/cli
