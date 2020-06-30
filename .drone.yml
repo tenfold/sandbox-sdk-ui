@@ -34,7 +34,7 @@ steps:
       - npm run lint
 
   - name: tests-unit
-    depends_on: [tests-lint, chrome]
+    depends_on: [tests-lint]
     pull: if-not-exists
     image: node:12.11.1
     commands:
@@ -48,7 +48,3 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run build --prod
-
-services:
-  - name: chrome
-    image: selenium/node-chrome
