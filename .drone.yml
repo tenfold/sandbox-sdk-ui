@@ -27,7 +27,7 @@ steps:
       - echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
       - apt-get -y update
       - apt-get -y install google-chrome-stable
-      - google-chrome &
+      - google-chrome --no-sandbox &
       - cd ./sandbox-sdk-app
       - npm install
       - npm install -g @angular/cli
