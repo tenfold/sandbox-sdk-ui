@@ -21,6 +21,7 @@ steps:
     pull: if-not-exists
     image: node:12.11.1
     commands:
+      - cd ./sandbox-sdk-app
       - npm install
       - npm install -g angular-cli
 
@@ -31,7 +32,6 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run lint
-      - echo fooasdasdasdasasddas
 
   - name: tests-unit
     depends_on: [install]
