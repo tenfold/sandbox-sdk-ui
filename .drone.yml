@@ -7,7 +7,7 @@ platform:
   arch: amd64
 
 services:
-  chrome:
+  -name: chrome
     image: selenium/node-chrome
 
 clone:
