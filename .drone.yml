@@ -22,7 +22,8 @@ steps:
     image: node:12.11.1
     commands:
       - apt-get update
-      - apt-get install chromium-browser -y
+      - apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
+      - apt-get -y install google-chrome-stable
       - cd ./sandbox-sdk-app
       - npm install
       - npm install -g @angular/cli
