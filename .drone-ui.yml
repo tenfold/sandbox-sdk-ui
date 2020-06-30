@@ -34,6 +34,7 @@ steps:
     image: node:12.11.1
     commands:
       - npm run lint
+      - echo foo
 
   - name: tests-unit
     depends_on: [install]
