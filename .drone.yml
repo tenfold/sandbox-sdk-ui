@@ -6,10 +6,6 @@ platform:
   os: linux
   arch: amd64
 
-services:
-  -name: chrome
-    image: selenium/node-chrome
-
 clone:
   disable: true
 
@@ -52,3 +48,7 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run build --prod
+
+services:
+  -name: chrome
+    image: selenium/node-chrome
