@@ -50,5 +50,5 @@ steps:
       - npm run build --prod
 
 services:
-  -name: chrome
+  - name: chrome
     image: selenium/node-chrome
