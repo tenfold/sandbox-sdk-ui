@@ -36,7 +36,7 @@ steps:
   commands:
   - cd ./sandbox-sdk-app
   - npm run lint
-  - echo fullf
+  - echo fullfsadas
 
 - name: tests-unit
   depends_on: [ install ]
