@@ -32,8 +32,6 @@ steps:
     commands:
       - cd ./sandbox-sdk-app
       - npm run test
-    environment:
-      CHROMIUM_BIN: /usr/bin/google-chrome
 
   - name: tests-lint
     depends_on: [tests-unit]
