@@ -41,8 +41,16 @@ steps:
       - cd ./sandbox-sdk-app
       - npm run lint
 
+  - name: tests-e2e
+    depends_on: [tests-lint]
+    pull: if-not-exists
+    image: cypress/browsers:node12.14.1-chrome83-ff77
+    commands:
+      - cd ./sandbox-sdk-app
+      - npm run e2e
+
   - name: build
-    depends_on: [tests-unit]
+    depends_on: [tests-lint]
     pull: if-not-exists
     image: cypress/browsers:node12.14.1-chrome83-ff77
     commands:
