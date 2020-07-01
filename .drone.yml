@@ -19,20 +19,17 @@ steps:
   - name: install
     depends_on: [git]
     pull: if-not-exists
-    image: ubuntu:latest
+    image: node:12.11.1
     commands:
-      - apt-get update
-      - apt-get install -yq npm libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev
       - cd ./sandbox-sdk-app
+      - npm install --save chromium chromedriver selenium-webdriver
       - npm install
       - npm install -g @angular/cli
-    environment:
-      DEBIAN_FRONTEND: noninteractive
 
   - name: tests-unit
     depends_on: [install]
     pull: if-not-exists
-    image: ubuntu:latest
+    image: node:12.11.1
     commands:
       - cd ./sandbox-sdk-app
       - npm run test
@@ -42,7 +39,7 @@ steps:
   - name: tests-lint
     depends_on: [tests-unit]
     pull: if-not-exists
-    image: ubuntu:latest
+    image: node:12.11.1
     commands:
       - cd ./sandbox-sdk-app
       - npm run lint
@@ -50,7 +47,7 @@ steps:
   - name: build
     depends_on: [tests-unit]
     pull: if-not-exists
-    image: ubuntu:latest
+    image: node:12.11.1
     commands:
       - cd ./sandbox-sdk-app
       - npm run build --prod
