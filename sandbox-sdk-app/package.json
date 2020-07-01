@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test --watch=false --browsers=ChromiumHeadless",
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -19,7 +19,9 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
-    "puppeteer": "^4.0.1",
+    "chromedriver": "^83.0.0",
+    "chromium": "^2.1.2",
+    "selenium-webdriver": "^4.0.0-alpha.7",
     "test-sdk-ui-integration": "^1.0.58",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
