@@ -50,7 +50,7 @@ steps:
       - npm run e2e
 
   - name: build
-    depends_on: [tests-lint]
+    depends_on: [tests-e2e]
     pull: if-not-exists
     image: cypress/browsers:node12.14.1-chrome83-ff77
     commands:
