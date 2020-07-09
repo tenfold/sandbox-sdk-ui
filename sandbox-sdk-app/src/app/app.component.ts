@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Connector } from 'test-sdk-ui-integration';
+import { WebClient as TenfoldWebClient } from '@tenfold/web-client-sdk';
 import { PASSWORD } from './password';
 
 @Component({
@@ -13,22 +13,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscriptionUser: Subscription;
   subscriptionPhoneSystem: Subscription;
-  connector = new Connector({
+  webClient = new TenfoldWebClient({
     iframeDivId: 'some-sdk-custom-id',
   });
 
   isReady = false;
 
   ngOnInit() {
-    this.connector.isReady$.subscribe((isReady: boolean) => {
+    this.webClient.isReady$.subscribe((isReady: boolean) => {
       console.log('[app log] isReady in app: ', isReady);
 
       if (!!isReady) {
-        this.subscriptionUser = this.connector.auth.user$.subscribe((user) => {
+        this.subscriptionUser = this.webClient.auth.user$.subscribe((user) => {
           console.log('[app log] user: ', user);
         });
 
-        this.subscriptionPhoneSystem = this.connector.auth.phoneSystem$.subscribe(
+        this.subscriptionPhoneSystem = this.webClient.auth.phoneSystem$.subscribe(
           (phoneSystem) => {
             console.log('[app log] phoneSystem: ', phoneSystem);
           }
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(event: MouseEvent) {
     event.preventDefault();
     if (this.isReady) {
-      this.connector.auth.logout();
+      this.webClient.auth.logout();
     } else {
       alert('is not ready!');
     }
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   login(event: MouseEvent) {
     event.preventDefault();
     if (this.isReady) {
-      this.connector.auth
+      this.webClient.auth
         .login({
           username: 'pawel.paulinski+dev@tenfold.com',
           password: `${PASSWORD}`,
