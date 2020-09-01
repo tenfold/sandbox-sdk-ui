@@ -14,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   subscriptionUser: Subscription;
   subscriptionPhoneSystem: Subscription;
   webClient = new TenfoldWebClient({
+    // sharedWorker: false,
     iframeDivId: 'some-sdk-custom-id',
   });
 
