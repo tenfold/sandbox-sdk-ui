@@ -1,1 +1,1 @@
-export const PASSWORD = '';
+export const PASSWORD = '@TempPass123';
