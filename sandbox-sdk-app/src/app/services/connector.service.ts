@@ -8,15 +8,15 @@ export class ConnectorService {
 
   constructor() { }
 
-  private _webClient: TenfoldWebClient;
+  private webClient: TenfoldWebClient;
   getSDKService() {
-    if (!this._webClient) {
-      this._webClient = new TenfoldWebClient({
+    if (!this.webClient) {
+      this.webClient = new TenfoldWebClient({
         // sharedWorker: false,
         iframeDivId: 'some-sdk-custom-id',
         sdkUrl: 'http://localhost:8081/sdk.html',
       });
     }
-    return this._webClient;
+    return this.webClient;
   }
 }

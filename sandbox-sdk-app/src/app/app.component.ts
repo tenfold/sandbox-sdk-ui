@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.connectorService.getSDKService().auth.phoneSystem$,
         ]).pipe(
           map(([user, phoneSystem]) => ({ user, phoneSystem })),
-        )
+        );
       }
     }),
   ) as Observable<{ user: User, phoneSystem: string | null } | undefined>;
