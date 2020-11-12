@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { WebClient as TenfoldWebClient } from '@tenfold/web-client-sdk';
-import { PASSWORD } from './password';
+import { User } from '@tenfold/web-client-sdk';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { ConnectorService } from './services/connector.service';
 
 @Component({
   selector: 'app-root',
@@ -11,69 +12,31 @@ import { PASSWORD } from './password';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sandbox-sdk-app';
 
-  subscriptionUser: Subscription;
-  subscriptionPhoneSystem: Subscription;
-  webClient = new TenfoldWebClient({
-    // sharedWorker: false,
-    iframeDivId: 'some-sdk-custom-id',
-  });
+  constructor(private connectorService: ConnectorService) { }
 
-  isReady = false;
+  readonly isReady$ = this.connectorService.getSDKService().isReady$;
+  readonly isAuthed$ = this.connectorService.getSDKService().isAuthenticated$;
 
-  ngOnInit() {
-    this.webClient.isReady$.subscribe((isReady: boolean) => {
-      console.log('[app log] isReady in app: ', isReady);
-
-      if (!!isReady) {
-        this.subscriptionUser = this.webClient.auth.user$.subscribe((user) => {
-          console.log('[app log] user: ', user);
-        });
-
-        this.subscriptionPhoneSystem = this.webClient.auth.phoneSystem$.subscribe(
-          (phoneSystem) => {
-            console.log('[app log] phoneSystem: ', phoneSystem);
-          }
+  readonly userAndPhoneSystem$ = this.isAuthed$.pipe(
+    switchMap((isAuthed) => {
+      if (!isAuthed) {
+        return of(undefined);
+      } else {
+        return combineLatest([
+          this.connectorService.getSDKService().auth.user$,
+          this.connectorService.getSDKService().auth.phoneSystem$,
+        ]).pipe(
+          map(([user, phoneSystem]) => ({ user, phoneSystem })),
         );
       }
-      this.isReady = isReady;
-    });
-  }
+    }),
+  ) as Observable<{ user: User, phoneSystem: string | null } | undefined>;
 
-  ngOnDestroy() {
-    if (this.subscriptionUser) {
-      this.subscriptionUser.unsubscribe();
-    }
+  ngOnInit() { }
 
-    if (this.subscriptionPhoneSystem) {
-      this.subscriptionPhoneSystem.unsubscribe();
-    }
-  }
+  ngOnDestroy() { }
 
-  logout(event: MouseEvent) {
-    event.preventDefault();
-    if (this.isReady) {
-      this.webClient.auth.logout();
-    } else {
-      alert('is not ready!');
-    }
-  }
-
-  login(event: MouseEvent) {
-    event.preventDefault();
-    if (this.isReady) {
-      this.webClient.auth
-        .login({
-          username: 'pawel.paulinski+dev@tenfold.com',
-          password: `${PASSWORD}`,
-        })
-        .then(() => {
-          console.log('[app log] Successfully loggedIn');
-        })
-        .catch((err) => {
-          console.log('[app log] Error, not loggedIn', err.message);
-        });
-    } else {
-      alert('is not ready!');
-    }
+  async logout() {
+    await this.connectorService.getSDKService().auth.logout();
   }
 }

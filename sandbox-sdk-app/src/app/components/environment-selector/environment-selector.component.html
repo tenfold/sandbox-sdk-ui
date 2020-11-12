@@ -1,0 +1,15 @@
+<label *ngIf="isAuthed$ | async"
+  >ENV: {{ (currentEnvironment$ | async)?.environmentUrl }}</label
+>
+
+<mat-form-field appearance="fill" *ngIf="!(isAuthed$ | async)">
+  <mat-label>Select environment:</mat-label>
+  <mat-select [formControl]="environment">
+    <mat-option
+      *ngFor="let environmentItem of environmentList"
+      [value]="environmentItem"
+      (click)="selectEnv(environmentItem)"
+      >{{ environmentItem }}</mat-option
+    >
+  </mat-select>
+</mat-form-field>
