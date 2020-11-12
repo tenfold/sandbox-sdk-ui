@@ -19,7 +19,7 @@ steps:
   - name: install
     depends_on: [git]
     pull: if-not-exists
-    image: cypress/browsers:node12.14.1-chrome83-ff77
+    image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
       - npm install
@@ -28,7 +28,7 @@ steps:
   - name: tests-unit
     depends_on: [install]
     pull: if-not-exists
-    image: cypress/browsers:node12.14.1-chrome83-ff77
+    image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
       - npm run test
@@ -36,7 +36,7 @@ steps:
   - name: tests-lint
     depends_on: [tests-unit]
     pull: if-not-exists
-    image: cypress/browsers:node12.14.1-chrome83-ff77
+    image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
       - npm run lint
@@ -44,7 +44,7 @@ steps:
   - name: tests-e2e
     depends_on: [tests-lint]
     pull: if-not-exists
-    image: cypress/browsers:node12.14.1-chrome83-ff77
+    image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
       - npm run e2e
@@ -52,7 +52,7 @@ steps:
   - name: build
     depends_on: [tests-e2e]
     pull: if-not-exists
-    image: cypress/browsers:node12.14.1-chrome83-ff77
+    image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
       - npm run build --prod
