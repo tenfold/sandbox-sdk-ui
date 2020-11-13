@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ConnectorService } from 'src/app/services/connector.service';
   templateUrl: './interactions-list.component.html',
   styleUrls: ['./interactions-list.component.scss']
 })
-export class InteractionsListComponent implements OnInit {
+export class InteractionsListComponent implements OnInit, OnDestroy {
 
   constructor(
     private connectorService: ConnectorService,
@@ -19,6 +19,7 @@ export class InteractionsListComponent implements OnInit {
   readonly interactions$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactions$.pipe(
+      map((interactions) => interactions.sort((a, b) => b.startTime - a.startTime)),
       tap((interactions) => console.log('interactions', interactions)),
     )),
   );
@@ -29,7 +30,6 @@ export class InteractionsListComponent implements OnInit {
       tap((interactionStatus) => console.log('interactionStatus', interactionStatus)),
     )),
   );
-
 
   private statusChangeSub = new Subscription();
   ngOnInit(): void {

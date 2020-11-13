@@ -51,5 +51,10 @@
   .interactions-card {
     width: 100%;
     margin: 10px;
+    max-height: 400px;
+
+    mat-card-content {
+      height: 90%;
+    }
   }
 }

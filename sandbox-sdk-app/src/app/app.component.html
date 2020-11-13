@@ -27,6 +27,15 @@
       <app-interactions-list></app-interactions-list>
     </mat-card-content>
   </mat-card>
+
+  <mat-card class="logger">
+    <mat-card-header>
+      <mat-card-title>Logs:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-logger></app-logger>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div class="toolbar bottom" *ngIf="isReady$ | async">

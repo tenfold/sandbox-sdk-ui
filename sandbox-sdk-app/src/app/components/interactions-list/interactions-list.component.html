@@ -2,7 +2,7 @@
   <span *ngIf="!interactions || !interactions.length">No interactions!</span>
 
   <mat-list *ngIf="!!interactions && interactions.length">
-    <div mat-subheader>Available interactions:</div>
+    <div mat-subheader>Available interactions ({{ interactions.length }}):</div>
     <mat-list-item *ngFor="let interaction of interactions">
       <mat-icon
         mat-list-icon
@@ -17,9 +17,18 @@
         >north_west</mat-icon
       >
 
-      <div mat-line>{{ interaction.name }} #{{ interaction.id }}</div>
+      <div mat-line>
+        <b>{{ interaction.name }}</b> #{{ interaction.id }}
+      </div>
 
-      <div mat-line>Status: {{ interaction.status }}</div>
+      <div mat-line>
+        Status: <b>{{ interaction.status }}</b
+        >, phone number:
+        <b>{{ interaction.phoneNumber }}</b>
+        , start time: <b>{{ interaction.startTime | date: "short" }}</b> , end
+        time:
+        <b>{{ interaction.endTime | date: "short" }}</b>
+      </div>
     </mat-list-item>
   </mat-list>
 </ng-container>

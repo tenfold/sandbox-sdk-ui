@@ -1,0 +1,16 @@
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let log of logs$ | async"
+    [hideToggle]="!log.diff"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span>
+          [{{ log.timestamp | date: "short" }}] <b>{{ log.title }}</b>
+        </span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <p *ngIf="log.diff">{{ log.diff }}</p>
+  </mat-expansion-panel>
+</mat-accordion>

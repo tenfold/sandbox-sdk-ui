@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { AgentStatusComponent } from './components/agent-status/agent-status.com
 import { AuthComponent } from './components/auth/auth.component';
 import { EnvironmentSelectorComponent } from './components/environment-selector/environment-selector.component';
 import { InteractionsListComponent } from './components/interactions-list/interactions-list.component';
+import { LoggerComponent } from './components/logger/logger.component';
 import { NgLetDirective } from './components/ng-let/ng-let.directive';
 
 @NgModule({
@@ -27,7 +29,8 @@ import { NgLetDirective } from './components/ng-let/ng-let.directive';
     EnvironmentSelectorComponent,
     InteractionsListComponent,
     AuthComponent,
-    NgLetDirective
+    NgLetDirective,
+    LoggerComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { NgLetDirective } from './components/ng-let/ng-let.directive';
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

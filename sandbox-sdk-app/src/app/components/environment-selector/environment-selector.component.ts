@@ -52,5 +52,4 @@ export class EnvironmentSelectorComponent implements OnInit, OnDestroy {
       this.environment.setValue(prevVal.environmentUrl);
     }
   }
-
 }
