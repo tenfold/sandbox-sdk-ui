@@ -29,10 +29,10 @@ export class EnvironmentSelectorComponent implements OnInit, OnDestroy {
 
   readonly isAuthed$ = this.connectorService.getSDKService().isAuthenticated$;
 
-  private _destroySubject$ = new Subject();
+  private destroySubject$ = new Subject();
   ngOnInit(): void {
     this.currentEnvironment$.pipe(
-      takeUntil(this._destroySubject$),
+      takeUntil(this.destroySubject$),
       tap((val) => {
         this.environment.setValue(val.environmentUrl);
       }),
@@ -40,8 +40,8 @@ export class EnvironmentSelectorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._destroySubject$.next();
-    this._destroySubject$.complete();
+    this.destroySubject$.next();
+    this.destroySubject$.complete();
   }
 
   async selectEnv(env: string) {
