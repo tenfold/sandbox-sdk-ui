@@ -19,12 +19,23 @@
     </button>
   </div>
 
-  <mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
-  </mat-grid-list>
+  <mat-card class="interactions-card">
+    <mat-card-header>
+      <mat-card-title>Interactions:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-interactions-list></app-interactions-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="logger">
+    <mat-card-header>
+      <mat-card-title>Logs:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-logger></app-logger>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div class="toolbar bottom" *ngIf="isReady$ | async">

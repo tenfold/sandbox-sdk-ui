@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -17,6 +19,8 @@ import { AgentStatusComponent } from './components/agent-status/agent-status.com
 import { AuthComponent } from './components/auth/auth.component';
 import { EnvironmentSelectorComponent } from './components/environment-selector/environment-selector.component';
 import { InteractionsListComponent } from './components/interactions-list/interactions-list.component';
+import { LoggerComponent } from './components/logger/logger.component';
+import { NgLetDirective } from './components/ng-let/ng-let.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,9 @@ import { InteractionsListComponent } from './components/interactions-list/intera
     AgentStatusComponent,
     EnvironmentSelectorComponent,
     InteractionsListComponent,
-    AuthComponent
+    AuthComponent,
+    NgLetDirective,
+    LoggerComponent
   ],
   imports: [
     BrowserModule,
@@ -32,14 +38,17 @@ import { InteractionsListComponent } from './components/interactions-list/intera
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatGridListModule,
+    MatCardModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatListModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatIconModule,
     ReactiveFormsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

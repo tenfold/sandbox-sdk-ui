@@ -1,1 +1,34 @@
-<p>interactions-list works!</p>
+<ng-container *ngLet="interactions$ | async as interactions">
+  <span *ngIf="!interactions || !interactions.length">No interactions!</span>
+
+  <mat-list *ngIf="!!interactions && interactions.length">
+    <div mat-subheader>Available interactions ({{ interactions.length }}):</div>
+    <mat-list-item *ngFor="let interaction of interactions">
+      <mat-icon
+        mat-list-icon
+        *ngIf="interaction.direction === 'Inbound'"
+        [title]="interaction.direction"
+        >south_east</mat-icon
+      >
+      <mat-icon
+        mat-list-icon
+        *ngIf="interaction.direction === 'Outbound'"
+        [title]="interaction.direction"
+        >north_west</mat-icon
+      >
+
+      <div mat-line>
+        <b>{{ interaction.name }}</b> #{{ interaction.id }}
+      </div>
+
+      <div mat-line>
+        Status: <b>{{ interaction.status }}</b
+        >, phone number:
+        <b>{{ interaction.phoneNumber }}</b>
+        , start time: <b>{{ interaction.startTime | date: "short" }}</b> , end
+        time:
+        <b>{{ interaction.endTime | date: "short" }}</b>
+      </div>
+    </mat-list-item>
+  </mat-list>
+</ng-container>

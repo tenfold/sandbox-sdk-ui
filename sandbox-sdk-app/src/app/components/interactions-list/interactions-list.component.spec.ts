@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AppModule } from 'src/app/app.module';
 import { InteractionsListComponent } from './interactions-list.component';
 
 describe('InteractionsListComponent', () => {
@@ -8,9 +8,10 @@ describe('InteractionsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InteractionsListComponent ]
+      imports: [AppModule],
+      declarations: [InteractionsListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
