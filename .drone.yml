@@ -47,7 +47,6 @@ steps:
     image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
-      - npm install -g webdriver-manager
       - webdriver-manager update --versions.chrome 86.0.4240.193
       - npm run e2e
 
