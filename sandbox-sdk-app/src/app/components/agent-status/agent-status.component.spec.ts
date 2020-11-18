@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AgentStatusComponent } from './agent-status.component';
 
 describe('AgentStatusComponent', () => {
@@ -8,9 +7,9 @@ describe('AgentStatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgentStatusComponent ]
+      declarations: [AgentStatusComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
