@@ -1,0 +1,25 @@
+:host {
+  width: 100%;
+  height: fit-content;
+  display: block;
+
+  mat-card {
+    width: 50%;
+    max-width: 400px;
+    margin: 2em auto;
+    text-align: center;
+
+    button.logout {
+      display: flex;
+      justify-self: flex-start;
+
+      mat-icon {
+        margin-left: 7px;
+      }
+    }
+  }
+
+  mat-form-field {
+    display: block;
+  }
+}

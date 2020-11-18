@@ -1,43 +1,75 @@
-<mat-spinner *ngIf="!(isReady$ | async) && !(isAuthed$ | async)"></mat-spinner>
+<ng-container *ngLet="isReady$ | async as isReady">
+  <ng-container *ngLet="isAuthed$ | async as isAuthed">
+    <ng-container
+      *ngLet="isAgentLoginRequired$ | async as isAgentLoginRequired"
+    >
+      <ng-container
+        *ngLet="isAgentSessionActive$ | async as isAgentSessionActive"
+      >
+        <mat-spinner *ngIf="!isReady && !isAuthed"></mat-spinner>
 
-<app-auth *ngIf="(isReady$ | async) && !(isAuthed$ | async)"></app-auth>
+        <app-auth *ngIf="isReady && !isAuthed"></app-auth>
 
-<div
-  class="content"
-  role="main"
-  *ngIf="(isReady$ | async) && (isAuthed$ | async)"
->
-  <div class="toolbar">
-    <div class="user-info">
-      Logged in as:
-      <b>{{ (userAndPhoneSystem$ | async)?.user?.username }} </b>
-      on
-      <b> {{ (userAndPhoneSystem$ | async)?.phoneSystem }}</b>
-    </div>
-    <button mat-flat-button color="primary" (click)="logout()" class="logout">
-      Logout
-    </button>
-  </div>
+        <app-agent-login
+          *ngIf="
+            isReady && isAuthed && isAgentLoginRequired && !isAgentSessionActive
+          "
+          [agentSettings]="agentSettings$ | async"
+        ></app-agent-login>
 
-  <mat-card class="interactions-card">
-    <mat-card-header>
-      <mat-card-title>Interactions:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <app-interactions-list></app-interactions-list>
-    </mat-card-content>
-  </mat-card>
+        <div
+          class="content"
+          role="main"
+          *ngIf="
+            isReady &&
+            isAuthed &&
+            (!isAgentLoginRequired ||
+              (isAgentLoginRequired && isAgentSessionActive))
+          "
+        >
+          <div class="toolbar">
+            <app-agent-status-selector></app-agent-status-selector>
+            <div class="flex-end">
+              <div class="user-info">
+                Logged in as:
+                <b>{{ (userAndPhoneSystem$ | async)?.user?.username }} </b>
+                on
+                <b> {{ (userAndPhoneSystem$ | async)?.phoneSystem }}</b>
+              </div>
+              <button
+                mat-flat-button
+                color="primary"
+                (click)="logout()"
+                class="logout"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
 
-  <mat-card class="logger">
-    <mat-card-header>
-      <mat-card-title>Logs:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <app-logger></app-logger>
-    </mat-card-content>
-  </mat-card>
-</div>
+          <mat-card class="interactions-card">
+            <mat-card-header>
+              <mat-card-title>Interactions:</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <app-interactions-list></app-interactions-list>
+            </mat-card-content>
+          </mat-card>
 
-<div class="toolbar bottom" *ngIf="isReady$ | async">
-  <app-environment-selector></app-environment-selector>
-</div>
+          <mat-card class="logger">
+            <mat-card-header>
+              <mat-card-title>Logs:</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <app-logger></app-logger>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="toolbar bottom" *ngIf="isReady">
+          <app-environment-selector></app-environment-selector>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

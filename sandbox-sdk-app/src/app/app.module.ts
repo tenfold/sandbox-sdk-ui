@@ -15,22 +15,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AgentStatusComponent } from './components/agent-status/agent-status.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { EnvironmentSelectorComponent } from './components/environment-selector/environment-selector.component';
 import { InteractionsListComponent } from './components/interactions-list/interactions-list.component';
 import { LoggerComponent } from './components/logger/logger.component';
 import { NgLetDirective } from './components/ng-let/ng-let.directive';
+import { AgentStatusSelectorComponent } from './components/agent-status-selector/agent-status-selector.component';
+import { AgentLoginComponent } from './components/agent-login/agent-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AgentStatusComponent,
     EnvironmentSelectorComponent,
     InteractionsListComponent,
     AuthComponent,
     NgLetDirective,
-    LoggerComponent
+    LoggerComponent,
+    AgentStatusSelectorComponent,
+    AgentLoginComponent
   ],
   imports: [
     BrowserModule,

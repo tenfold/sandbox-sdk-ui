@@ -19,9 +19,7 @@ export class LoggerComponent implements OnInit, OnDestroy {
 
   readonly interactionChange$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
-    switchMap(() => this.connectorService.getSDKService().interaction.interactionChange$.pipe(
-      tap((interactionChanged) => console.log('interactionChanged', interactionChanged)),
-    )),
+    switchMap(() => this.connectorService.getSDKService().interaction.interactionChange$),
   );
 
   private _interactionsMap$ = new BehaviorSubject<{ [key: string]: Interaction }>({});
