@@ -1,5 +1,5 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// import { AppModule } from 'src/app/app.module';
 // import { EnvironmentSelectorComponent } from './environment-selector.component';
 
 // describe('EnvironmentSelectorComponent', () => {
@@ -8,9 +8,10 @@
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ EnvironmentSelectorComponent ]
+//       imports: [AppModule],
+//       declarations: [EnvironmentSelectorComponent]
 //     })
-//     .compileComponents();
+//       .compileComponents();
 //   }));
 
 //   beforeEach(() => {

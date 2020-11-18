@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e --webdriverUpdate=false"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
-    "@tenfold/web-client-sdk": "file:/Users/pablo/repos/tenfold-application/sdk",
+    "@tenfold/web-client-sdk": "^1.0.7",
     "lodash": "^4.17.20",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

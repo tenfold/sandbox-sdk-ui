@@ -14,28 +14,28 @@ export class LoggerComponent implements OnInit, OnDestroy {
 
   constructor(private connectorService: ConnectorService) { }
 
-  private _logs$ = new BehaviorSubject<{ title: string, timestamp: Date, diff?: string }[]>([]);
-  readonly logs$ = this._logs$.asObservable();
+  private logsInner$ = new BehaviorSubject<{ title: string, timestamp: Date, diff?: string }[]>([]);
+  readonly logs$ = this.logsInner$.asObservable();
 
   readonly interactionChange$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactionChange$),
   );
 
-  private _interactionsMap$ = new BehaviorSubject<{ [key: string]: Interaction }>({});
+  private interactionsMap$ = new BehaviorSubject<{ [key: string]: Interaction }>({});
   private interactionChangeSub = new Subscription();
   ngOnInit(): void {
     this.interactionChangeSub = this.interactionChange$.pipe(
       tap((changedInteraction) => {
-        if (this._interactionsMap$.value[changedInteraction.id]) {
-          const diffObj = objDiff(changedInteraction, this._interactionsMap$.value[changedInteraction.id]);
-          this.prependLog({ title: `Interaction #${changedInteraction.id} changed`, diff: `${JSON.stringify(diffObj, null, "\t")}` });
+        if (this.interactionsMap$.value[changedInteraction.id]) {
+          const diffObj = objDiff(changedInteraction, this.interactionsMap$.value[changedInteraction.id]);
+          this.prependLog({ title: `Interaction #${changedInteraction.id} changed`, diff: `${JSON.stringify(diffObj, null, '\t')}` });
         } else {
           this.prependLog({ title: `New Interaction #${changedInteraction.id}` });
         }
 
-        this._interactionsMap$.next({
-          ...this._interactionsMap$.value,
+        this.interactionsMap$.next({
+          ...this.interactionsMap$.value,
           [changedInteraction.id]: changedInteraction,
         });
       }),
@@ -47,7 +47,7 @@ export class LoggerComponent implements OnInit, OnDestroy {
   }
 
   private prependLog(log: { title: string, diff?: string }) {
-    this._logs$.next([{ ...log, timestamp: new Date() }, ...this._logs$.value]);
+    this.logsInner$.next([{ ...log, timestamp: new Date() }, ...this.logsInner$.value]);
   }
 
 }
