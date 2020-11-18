@@ -22,7 +22,7 @@ steps:
     image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
-      - npm install --save-dev
+      - npm install
       - npm install -g @angular/cli
 
   - name: tests-unit
@@ -47,7 +47,7 @@ steps:
     image: cypress/browsers:node12.19.0-chrome86-ff82
     commands:
       - cd ./sandbox-sdk-app
-      - webdriver-manager update --versions.chrome 86.0.4240.193
+      - ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 86.0.4240.193
       - npm run e2e
 
   - name: build
