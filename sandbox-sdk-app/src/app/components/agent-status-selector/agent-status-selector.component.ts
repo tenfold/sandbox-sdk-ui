@@ -52,8 +52,8 @@ export class AgentStatusSelectorComponent implements OnInit {
       } catch (err) {
       }
     } else {
-      this.snackBar.open('This status is readonly', 'OK', {
-        duration: 5000,
+      this.snackBar.open(`This status: ${agentStatus.type} ${agentStatus.reason ? '- ' + agentStatus.reason : ''} is readonly`, 'OK', {
+        duration: 2000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
       });
