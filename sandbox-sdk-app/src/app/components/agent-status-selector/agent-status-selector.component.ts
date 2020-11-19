@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AgentStatus } from '@tenfold/web-client-sdk';
@@ -11,7 +11,7 @@ import { ConnectorService } from 'src/app/services/connector.service';
   templateUrl: './agent-status-selector.component.html',
   styleUrls: ['./agent-status-selector.component.scss']
 })
-export class AgentStatusSelectorComponent implements OnInit {
+export class AgentStatusSelectorComponent implements OnInit, OnDestroy {
 
   agentStatus = new FormControl();
 
@@ -33,7 +33,6 @@ export class AgentStatusSelectorComponent implements OnInit {
     this.currentAgentStatus$.pipe(
       takeUntil(this.destroySubject$),
       tap((val) => {
-        console.log('set CurrentAgentStatus!', val);
         this.agentStatus.setValue(val?.id);
       }),
     ).subscribe();
