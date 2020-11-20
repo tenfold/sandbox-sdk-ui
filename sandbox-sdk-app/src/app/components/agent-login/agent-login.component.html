@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-content>
+    <button mat-mini-fab color="warn" class="logout" (click)="logout()">
+      <mat-icon>keyboard_return</mat-icon>
+    </button>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h2>Agent Log In</h2>
+
+      <mat-form-field class="full-width-input">
+        <input
+          matInput
+          placeholder="AgentId"
+          formControlName="agentId"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Extension</mat-label>
+        <mat-select formControlName="extension">
+          <mat-option
+            *ngFor="let extension of agentSettings?.extensions || []"
+            [value]="extension.extension"
+          >
+            {{ extension.displayExtension }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary">Agent Login</button>
+
+      <mat-error *ngIf="loginInvalid"> The credentials are invalid! </mat-error>
+    </form>
+  </mat-card-content>
+</mat-card>

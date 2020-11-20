@@ -20,15 +20,12 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
     filter((isAuthenticated) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactions$.pipe(
       map((interactions) => interactions.sort((a, b) => b.startTime - a.startTime)),
-      tap((interactions) => console.log('interactions', interactions)),
     )),
   );
 
   readonly statusChange$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
-    switchMap(() => this.connectorService.getSDKService().interaction.interactionStatusChange$.pipe(
-      tap((interactionStatus) => console.log('interactionStatus', interactionStatus)),
-    )),
+    switchMap(() => this.connectorService.getSDKService().interaction.interactionStatusChange$),
   );
 
   private statusChangeSub = new Subscription();

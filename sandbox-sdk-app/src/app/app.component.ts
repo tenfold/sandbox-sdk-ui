@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@tenfold/web-client-sdk';
 import { combineLatest, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { ConnectorService } from './services/connector.service';
 
 @Component({
@@ -16,6 +16,37 @@ export class AppComponent implements OnInit, OnDestroy {
 
   readonly isReady$ = this.connectorService.getSDKService().isReady$;
   readonly isAuthed$ = this.connectorService.getSDKService().isAuthenticated$;
+
+  readonly isAgentLoginRequired$ = this.isAuthed$.pipe(
+    switchMap((isAuthed) => {
+      if (isAuthed) {
+        return this.connectorService.getSDKService().callControls.hasSessionCreation$;
+      } else {
+        return of(false);
+      }
+    }),
+  );
+
+  readonly isAgentSessionActive$ = this.isAuthed$.pipe(
+    switchMap((isAuthed) => {
+      if (isAuthed) {
+        return this.connectorService.getSDKService().callControls.sessionActive$;
+      } else {
+        return of(false);
+      }
+    }),
+  );
+
+  readonly agentSettings$ = this.isAuthed$.pipe(
+    switchMap((isAuthed) => {
+      if (isAuthed) {
+        return this.connectorService.getSDKService().agentStatus.getAgentSettings();
+      } else {
+        return of(false);
+      }
+    }),
+  );
+
 
   readonly userAndPhoneSystem$ = this.isAuthed$.pipe(
     switchMap((isAuthed) => {
@@ -32,11 +63,18 @@ export class AppComponent implements OnInit, OnDestroy {
     }),
   ) as Observable<{ user: User, phoneSystem: string | null } | undefined>;
 
+
   ngOnInit() { }
 
   ngOnDestroy() { }
 
   async logout() {
-    await this.connectorService.getSDKService().auth.logout();
+    const isAgentLoginRequired = await this.isAgentLoginRequired$.pipe(take(1)).toPromise();
+    const sessionActive = await this.isAgentSessionActive$.pipe(take(1)).toPromise();
+    if (isAgentLoginRequired && sessionActive) {
+      await this.connectorService.getSDKService().callControls.destroySession();
+    } else {
+      await this.connectorService.getSDKService().auth.logout();
+    }
   }
 }

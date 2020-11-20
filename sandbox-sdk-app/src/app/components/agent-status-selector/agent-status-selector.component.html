@@ -1,0 +1,23 @@
+<ng-container *ngIf="isAuthed$ | async">
+  <div *ngLet="agentStatuses$ | async as agentStatuses">
+    <span class="error" *ngIf="!agentStatuses || !agentStatuses.length">
+      <b>Agent statuses not configured!</b>
+    </span>
+
+    <mat-form-field
+      appearance="fill"
+      *ngIf="agentStatuses && agentStatuses.length"
+    >
+      <mat-label>Agent status:</mat-label>
+      <mat-select [formControl]="agentStatus">
+        <mat-option
+          *ngFor="let status of agentStatuses"
+          [value]="status.id"
+          (click)="selectAgentStatus(status)"
+          >{{ status.type }}
+          <span *ngIf="status.reason"> - {{ status.reason }}</span></mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+</ng-container>

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
 
 @Component({
