@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="dial()">
+  <h2>Dialer:</h2>
+
+  <mat-form-field class="full-width-input">
+    <input
+      matInput
+      placeholder="Enter phone number"
+      formControlName="phoneNumber"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+
+  <button mat-flat-button color="primary">Dial!</button>
+</form>
