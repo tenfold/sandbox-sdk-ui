@@ -14,7 +14,7 @@ export class ConnectorService {
       this.webClient = new TenfoldWebClient({
         // sharedWorker: false,
         iframeDivId: 'some-sdk-custom-id',
-        sdkUrl: 'http://localhost:8081/sdk.html',
+        sdkUrl: 'https://app.tenfold.com/v1.0.8-sdk/sdk.html',
       });
     }
     return this.webClient;
