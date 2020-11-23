@@ -10,9 +10,9 @@ import { ConnectorService } from 'src/app/services/connector.service';
 })
 export class AgentLoginComponent implements OnInit {
 
-  private _agentSettings: AgentSettings;
+  private agentSettingsInner: AgentSettings;
   @Input() set agentSettings(val: AgentSettings) {
-    this._agentSettings = val;
+    this.agentSettingsInner = val;
 
     const prefillAgentId = this.agentSettings?.agentId;
     if (!!prefillAgentId) {
@@ -30,7 +30,7 @@ export class AgentLoginComponent implements OnInit {
   }
 
   get agentSettings() {
-    return this._agentSettings;
+    return this.agentSettingsInner;
   }
 
   form: FormGroup;

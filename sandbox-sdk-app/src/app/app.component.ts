@@ -70,7 +70,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async logout() {
     const isAgentLoginRequired = await this.isAgentLoginRequired$.pipe(take(1)).toPromise();
-    if (isAgentLoginRequired) {
+    const sessionActive = await this.isAgentSessionActive$.pipe(take(1)).toPromise();
+    if (isAgentLoginRequired && sessionActive) {
       await this.connectorService.getSDKService().callControls.destroySession();
     } else {
       await this.connectorService.getSDKService().auth.logout();
