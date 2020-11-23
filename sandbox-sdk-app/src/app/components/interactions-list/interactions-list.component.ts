@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Interaction, isCall } from '@tenfold/web-client-sdk';
 import { Subscription } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
@@ -28,6 +29,11 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
     switchMap(() => this.connectorService.getSDKService().interaction.interactionStatusChange$),
   );
 
+  readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
+    filter((isAuthenticated) => isAuthenticated),
+    switchMap(() => this.connectorService.getSDKService().callControls.callControlsEnabled$),
+  );
+
   private statusChangeSub = new Subscription();
   ngOnInit(): void {
     this.statusChangeSub = this.statusChange$.pipe(
@@ -45,5 +51,9 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
     this.statusChangeSub.unsubscribe();
   }
 
-
+  answer(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.answerCall(interaction);
+    }
+  }
 }
