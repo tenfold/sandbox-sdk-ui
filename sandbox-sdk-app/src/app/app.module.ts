@@ -22,6 +22,7 @@ import { LoggerComponent } from './components/logger/logger.component';
 import { NgLetDirective } from './components/ng-let/ng-let.directive';
 import { AgentStatusSelectorComponent } from './components/agent-status-selector/agent-status-selector.component';
 import { AgentLoginComponent } from './components/agent-login/agent-login.component';
+import { DialerComponent } from './components/dialer/dialer.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AgentLoginComponent } from './components/agent-login/agent-login.compon
     NgLetDirective,
     LoggerComponent,
     AgentStatusSelectorComponent,
-    AgentLoginComponent
+    AgentLoginComponent,
+    DialerComponent
   ],
   imports: [
     BrowserModule,
