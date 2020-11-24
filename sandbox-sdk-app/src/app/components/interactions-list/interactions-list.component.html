@@ -25,9 +25,23 @@
         Status: <b>{{ interaction.status }}</b
         >, phone number:
         <b>{{ interaction.phoneNumber }}</b>
-        , start time: <b>{{ interaction.startTime | date: "short" }}</b> , end
-        time:
+        , start time: <b>{{ interaction.startTime | date: "short" }}</b>
+        <span *ngIf="interaction.endTime">, end time:</span>
         <b>{{ interaction.endTime | date: "short" }}</b>
+
+        <button
+          *ngIf="
+            interaction.interactionType === 'Call' &&
+            interaction.status === 'Ringing' &&
+            (callControlsEnabled$ | async)
+          "
+          mat-flat-button
+          color="primary"
+          class="dial-btn"
+          (click)="answer(interaction)"
+        >
+          Answer
+        </button>
       </div>
     </mat-list-item>
   </mat-list>
