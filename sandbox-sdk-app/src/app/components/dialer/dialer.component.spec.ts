@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AppModule } from 'src/app/app.module';
 import { DialerComponent } from './dialer.component';
 
 describe('DialerComponent', () => {
@@ -8,9 +8,10 @@ describe('DialerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialerComponent ]
+      imports: [AppModule],
+      declarations: [DialerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
