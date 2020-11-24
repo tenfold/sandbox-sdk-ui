@@ -21,7 +21,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
-    "@tenfold/web-client-sdk": "^1.0.8",
+    "@tenfold/web-client-sdk": "file:/Users/pablo/repos/tenfold-application/sdk",
     "lodash": "^4.17.20",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
