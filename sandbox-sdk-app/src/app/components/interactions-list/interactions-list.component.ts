@@ -74,4 +74,10 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
       this.connectorService.getSDKService().callControls.answerCall(interaction);
     }
   }
+
+  hangup(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.hangupCall(interaction);
+    }
+  }
 }
