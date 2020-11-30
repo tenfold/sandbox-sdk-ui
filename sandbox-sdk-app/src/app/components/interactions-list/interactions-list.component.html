@@ -29,31 +29,7 @@
         <span *ngIf="interaction.endTime">, end time:</span>
         <b>{{ interaction.endTime | date: "short" }}</b>
 
-        <button
-          *ngIf="
-            interaction.interactionType === 'Call' &&
-            interaction.status === 'Ringing' &&
-            (callControlsEnabled$ | async)
-          "
-          mat-flat-button
-          color="primary"
-          class="dial-btn"
-          (click)="answer(interaction)"
-        >
-          Answer
-        </button>
-
-        <button
-          *ngIf="
-            interaction.status !== 'Hangup' && (callControlsEnabled$ | async)
-          "
-          mat-flat-button
-          color="primary"
-          class="dial-btn"
-          (click)="hangup(interaction)"
-        >
-          Hangup
-        </button>
+        <app-call-controls [interaction]="interaction"></app-call-controls>
       </div>
     </mat-list-item>
   </mat-list>
