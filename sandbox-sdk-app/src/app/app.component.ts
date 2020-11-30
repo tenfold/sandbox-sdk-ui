@@ -9,14 +9,14 @@ import { BehaviorSubject } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sandbox-sdk-app';
 
-  private _viewDestroyed$ = new BehaviorSubject(false);
-  viewDestroyed$ = this._viewDestroyed$.asObservable();
+  private viewDestroyedInner$ = new BehaviorSubject(false);
+  viewDestroyed$ = this.viewDestroyedInner$.asObservable();
 
   ngOnInit() { }
 
   ngOnDestroy() { }
 
   toggleMainView() {
-    this._viewDestroyed$.next(!this._viewDestroyed$.value);
+    this.viewDestroyedInner$.next(!this.viewDestroyedInner$.value);
   }
 }

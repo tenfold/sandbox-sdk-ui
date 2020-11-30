@@ -1,7 +1,7 @@
 <button
   *ngIf="
-    interaction.interactionType === 'Call' &&
-    interaction.status === 'Ringing' &&
+    interaction?.interactionType === 'Call' &&
+    interaction?.status === 'Ringing' &&
     (callControlsEnabled$ | async)
   "
   mat-flat-button
@@ -13,7 +13,7 @@
 </button>
 
 <button
-  *ngIf="interaction.status !== 'Hangup' && (callControlsEnabled$ | async)"
+  *ngIf="interaction?.status !== 'Hangup' && (callControlsEnabled$ | async)"
   mat-flat-button
   color="primary"
   class="call-control-btn"
@@ -22,10 +22,10 @@
   Hangup
 </button>
 
-<ng-container *ngIf="interaction.status !== 'Hangup'">
+<ng-container *ngIf="interaction?.status !== 'Hangup'">
   <button
     *ngIf="
-      !['Cancel', 'Held', 'Connected'].includes(interaction.status) &&
+      !['Cancel', 'Held', 'Connected'].includes(interaction?.status) &&
       (callControlsEnabled$ | async)
     "
     mat-flat-button
@@ -37,7 +37,7 @@
   </button>
 
   <button
-    *ngIf="interaction.status === 'Held' && (callControlsEnabled$ | async)"
+    *ngIf="interaction?.status === 'Held' && (callControlsEnabled$ | async)"
     mat-flat-button
     color="primary"
     class="call-control-btn"
