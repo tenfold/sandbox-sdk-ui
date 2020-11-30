@@ -1,0 +1,67 @@
+$destroy-btn-height: 25px;
+
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  mat-spinner {
+    display: flex;
+    align-self: center;
+    margin: 0 auto;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    mat-grid-tile {
+      background: lightblue;
+    }
+  }
+
+  .toolbar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    justify-content: space-between;
+
+    .flex-end {
+      display: flex;
+      justify-self: flex-end;
+    }
+
+    &.bottom {
+      position: fixed;
+      bottom: $destroy-btn-height;
+      height: 60px;
+      background-color: lightgray;
+      border-top: 1px #000 solid;
+
+      app-environment-selector {
+        display: flex;
+        align-self: center;
+        margin-right: 5px;
+        margin-top: 5px;
+      }
+    }
+
+    .user-info {
+      align-self: center;
+      margin-right: 5px;
+    }
+  }
+
+  .interactions-card {
+    width: 100%;
+    margin: 10px;
+    max-height: 400px;
+
+    mat-card-content {
+      height: 90%;
+    }
+  }
+}

@@ -1,81 +1,14 @@
-<ng-container *ngLet="isReady$ | async as isReady">
-  <ng-container *ngLet="isAuthed$ | async as isAuthed">
-    <ng-container
-      *ngLet="isAgentLoginRequired$ | async as isAgentLoginRequired"
-    >
-      <ng-container
-        *ngLet="isAgentSessionActive$ | async as isAgentSessionActive"
-      >
-        <mat-spinner *ngIf="!isReady && !isAuthed"></mat-spinner>
-
-        <app-auth *ngIf="isReady && !isAuthed"></app-auth>
-
-        <app-agent-login
-          *ngIf="
-            isReady && isAuthed && isAgentLoginRequired && !isAgentSessionActive
-          "
-          [agentSettings]="agentSettings$ | async"
-        ></app-agent-login>
-
-        <div
-          class="content"
-          role="main"
-          *ngIf="
-            isReady &&
-            isAuthed &&
-            (!isAgentLoginRequired ||
-              (isAgentLoginRequired && isAgentSessionActive))
-          "
-        >
-          <div class="toolbar">
-            <app-agent-status-selector></app-agent-status-selector>
-            <div class="flex-end">
-              <div class="user-info">
-                Logged in as:
-                <b>{{ (userAndPhoneSystem$ | async)?.user?.username }} </b>
-                on
-                <b> {{ (userAndPhoneSystem$ | async)?.phoneSystem }}</b>
-              </div>
-              <button
-                mat-flat-button
-                color="primary"
-                (click)="logout()"
-                class="logout"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-
-          <mat-card class="dialer">
-            <mat-card-content>
-              <app-dialer></app-dialer>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="interactions-card">
-            <mat-card-header>
-              <mat-card-title>Interactions:</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <app-interactions-list></app-interactions-list>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="logger">
-            <mat-card-header>
-              <mat-card-title>Logs:</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <app-logger></app-logger>
-            </mat-card-content>
-          </mat-card>
-        </div>
-
-        <div class="toolbar bottom" *ngIf="isReady">
-          <app-environment-selector></app-environment-selector>
-        </div>
-      </ng-container>
-    </ng-container>
-  </ng-container>
+<ng-container *ngLet="viewDestroyed$ | async as viewDestroyed">
+  <span *ngIf="viewDestroyed" class="destroyed-info"
+    >App was destroyed! Click on the button below to retrive it!</span
+  >
+  <app-main-view *ngIf="!viewDestroyed"></app-main-view>
+  <button
+    mat-flat-button
+    color="warn"
+    class="destroy-main-view-btn"
+    (click)="toggleMainView()"
+  >
+    <span>{{ viewDestroyed ? "Retrive app" : "Destroy app" }}</span>
+  </button>
 </ng-container>
