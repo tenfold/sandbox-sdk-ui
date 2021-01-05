@@ -36,6 +36,34 @@
     Hold
   </button>
 
+  <ng-container *ngIf="interaction?.status !== 'Hangup'">
+  <button
+    *ngIf="
+      !['Cancel', 'Held', 'Ringing'].includes(interaction?.status) &&
+      (callControlsEnabled$ | async)
+    "
+    mat-flat-button
+    color="primary"
+    class="call-control-btn"
+    (click)="mute(interaction)"
+  >
+    Mute
+  </button>
+
+  <ng-container *ngIf="interaction?.status !== 'Hangup'">
+    <button
+      *ngIf="
+        !['Cancel', 'Held', 'Ringing'].includes(interaction?.status) &&
+        (callControlsEnabled$ | async)
+      "
+      mat-flat-button
+      color="primary"
+      class="call-control-btn"
+      (click)="unmute(interaction)"
+    >
+      UnMute
+    </button>
+
   <button
     *ngIf="interaction?.status === 'Held' && (callControlsEnabled$ | async)"
     mat-flat-button

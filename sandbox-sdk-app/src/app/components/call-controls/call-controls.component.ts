@@ -40,9 +40,21 @@ export class CallControlsComponent implements OnInit {
     }
   }
 
+  mute(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.muteCall(interaction);
+    }
+  }
+
   retrieve(interaction: Interaction) {
     if (isCall(interaction)) {
       this.connectorService.getSDKService().callControls.retrieveCall(interaction);
+    }
+  }
+
+  unmute(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.unmuteCall(interaction);
     }
   }
 
