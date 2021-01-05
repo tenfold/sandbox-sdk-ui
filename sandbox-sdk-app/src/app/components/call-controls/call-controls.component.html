@@ -37,6 +37,19 @@
   </button>
 
   <button
+    *ngIf="
+      !['Cancel', 'Hangup', 'Held', 'Ringing'].includes(interaction?.status) &&
+      (callControlsEnabled$ | async)
+    "
+    mat-flat-button
+    color="primary"
+    class="call-control-btn"
+    (click)="mute(interaction)"
+  >
+    Mute
+  </button>
+
+  <button
     *ngIf="interaction?.status === 'Held' && (callControlsEnabled$ | async)"
     mat-flat-button
     color="primary"
@@ -44,5 +57,18 @@
     (click)="retrieve(interaction)"
   >
     Retrieve
+  </button>
+
+  <button
+    *ngIf="
+      !['Cancel', 'Hangup', 'Held', 'Ringing'].includes(interaction?.status) &&
+      (callControlsEnabled$ | async)
+    "
+    mat-flat-button
+    color="primary"
+    class="call-control-btn"
+    (click)="unmute(interaction)"
+  >
+    UnMute
   </button>
 </ng-container>
