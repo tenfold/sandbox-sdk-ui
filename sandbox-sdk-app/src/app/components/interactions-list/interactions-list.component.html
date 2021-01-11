@@ -30,6 +30,9 @@
         <b>{{ interaction.endTime | date: "short" }}</b>
 
         <app-call-controls [interaction]="interaction"></app-call-controls>
+        <app-transfers-section
+          [interaction]="interaction"
+        ></app-transfers-section>
       </div>
     </mat-list-item>
   </mat-list>
