@@ -1,0 +1,27 @@
+<form [formGroup]="form">
+  <h2>Agent Directory:</h2>
+
+  <mat-form-field class="full-width-input">
+    <input
+      matInput
+      placeholder="Search for company or queue"
+      formControlName="searchAgent"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+</form>
+
+<ng-container *ngIf="directoryConfig.result$ | async as results">
+  <mat-list>
+    <div mat-subheader>Results({{ results.length }}):</div>
+    <mat-list-item
+      *ngFor="let result of results; trackBy: trackByIndex"
+      (click)="selectAgent(result)"
+      class="agent-directory-item"
+    >
+      <b>{{ result.label }}</b
+      ><span> of type {{ result.type }}</span>
+    </mat-list-item>
+  </mat-list>
+</ng-container>

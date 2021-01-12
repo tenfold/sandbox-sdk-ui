@@ -25,6 +25,8 @@ import { AgentLoginComponent } from './components/agent-login/agent-login.compon
 import { DialerComponent } from './components/dialer/dialer.component';
 import { CallControlsComponent } from './components/call-controls/call-controls.component';
 import { MainViewComponent } from './main-view/main-view.component';
+import { AgentDirectoryComponent } from './components/agent-directory/agent-directory.component';
+import { TransfersSectionComponent } from './components/transfers-section/transfers-section.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { MainViewComponent } from './main-view/main-view.component';
     AgentLoginComponent,
     DialerComponent,
     CallControlsComponent,
-    MainViewComponent
+    MainViewComponent,
+    AgentDirectoryComponent,
+    TransfersSectionComponent
   ],
   imports: [
     BrowserModule,

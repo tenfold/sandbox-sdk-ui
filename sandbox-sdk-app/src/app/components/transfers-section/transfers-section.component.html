@@ -1,0 +1,22 @@
+<ng-container *ngIf="showCallControls$ | async">
+  <p>transfers-section works! {{ interaction.id }}</p>
+  <app-agent-directory [interaction]="interaction"></app-agent-directory>
+
+  <button
+    [disabled]="blindButtonDisabled$ | async"
+    mat-flat-button
+    color="primary"
+    (click)="blindTransfer()"
+  >
+    Do Blind Transfer
+  </button>
+
+  <!-- <button
+    *ngIf="(transferStage$ | async) === TransferStage.Transferring"
+    mat-flat-button
+    color="primary"
+    (click)="cancelBlindTransfer()"
+  >
+    Cancel Blind Transfer
+  </button> -->
+</ng-container>
