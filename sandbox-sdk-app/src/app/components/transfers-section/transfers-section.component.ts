@@ -72,13 +72,13 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     this.agent$.pipe(
       takeUntil(this.destroySubject$),
       tap((agent) => {
-        this._agent = agent;
+        this.agent = agent;
       }),
     ).subscribe();
   }
 
   private destroySubject$ = new Subject();
-  private _agent?: TransferAgent;
+  private agent?: TransferAgent;
   private callControlsAllowed$ = new BehaviorSubject<boolean>(false);
   readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
@@ -238,7 +238,7 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
   }
 
   get extension() {
-    const extensions = get(this._agent, 'extensions', []);
+    const extensions = get(this.agent, 'extensions', []);
     return extensions[0] || '';
   }
 
@@ -246,7 +246,7 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     let destinationNumber: string;
     let pbxOptions: any;
 
-    const dialOptions = get(this._agent, 'dialOptions');
+    const dialOptions = get(this.agent, 'dialOptions');
     if (dialOptions) {
       destinationNumber = String(get(dialOptions, 'phoneNumbers.0.number', ''));
       pbxOptions = { type: dialOptions.dialType };
