@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
+  Call,
   Interaction, isActive, isRinging, TransferAgent, TransferOptions, TransferStage
 } from '@tenfold/web-client-sdk';
 import { get, isEqual } from 'lodash';
@@ -23,6 +24,7 @@ import { ConnectorService } from 'src/app/services/connector.service';
 })
 export class TransfersSectionComponent implements OnInit, OnDestroy {
 
+  selectedTransferMode$ = new BehaviorSubject<'warm' | 'cold' | null>(null);
   TransferStage = TransferStage;
 
   interaction$ = new BehaviorSubject<Interaction | null>(null);
@@ -105,6 +107,27 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     }),
   );
 
+  warmButtonDisabled$ = combineLatest([
+    this.blindButtonDisabled$,
+    this.isCallActionInProgress$,
+  ]).pipe(
+    takeUntil(this.destroySubject$),
+    map(([blindButtonDisabled, isCallActionInProgress]) => {
+      return blindButtonDisabled || isCallActionInProgress;
+    }),
+  );
+
+  isHandoverAllowed$ = combineLatest([
+    this.interaction$,
+    this.journey$,
+  ]).pipe(
+    takeUntil(this.destroySubject$),
+    map(([interaction, journey]) => {
+      return (interaction as Call).meta?.callTag === 'conference' &&
+        journey.some(transfer => transfer.from.callId === interaction.id)
+    })
+  );
+
   ngOnInit(): void {
   }
 
@@ -142,11 +165,54 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     );
   }
 
+  get journey$() {
+    return this.interactionTransferSubState$.pipe(
+      takeUntil(this.destroySubject$),
+      map((state) => state?.journey),
+      startWith([]),
+    );
+  }
+
+  get isCallActionInProgress$() {
+    return this.interactionTransferSubState$.pipe(
+      takeUntil(this.destroySubject$),
+      map((state) => state?.isCallActionInProgress),
+    );
+  }
+
   async blindTransfer() {
     const transferOptions = this.getTransferOptions();
     await this.connectorService.getSDKService().transfers.blindTransfer(
       this.interaction.id,
       transferOptions);
+    this.selectedTransferMode$.next('cold');
+  }
+
+  async warmTransfer() {
+    //   if (isActive(this._internalCall)) {
+    //     return await this.transferService.handleInternalCall(this.callId, {} as TransferOptions);
+    // }
+
+    const transferOptions = this.getTransferOptions();
+    await this.connectorService.getSDKService().transfers.handleInternalCall(
+      this.interaction.id,
+      transferOptions);
+    this.selectedTransferMode$.next('warm');
+  }
+
+  async mergeTransfer() {
+    await this.connectorService.getSDKService().transfers.mergeTransfer(
+      this.interaction.id);
+  }
+
+  async completeWarmTransfer() {
+    await this.connectorService.getSDKService().transfers.completeWarmTransfer(
+      this.interaction.id);
+  }
+
+  async handOverCall() {
+    await this.connectorService.getSDKService().transfers.handOverCall(
+      this.interaction.id);
   }
 
   // async cancelBlindTransfer() {

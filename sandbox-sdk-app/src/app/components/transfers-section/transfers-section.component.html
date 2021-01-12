@@ -1,16 +1,52 @@
 <ng-container *ngIf="showCallControls$ | async">
-  <p>transfers-section works! {{ interaction.id }}</p>
   <app-agent-directory [interaction]="interaction"></app-agent-directory>
 
-  <button
-    [disabled]="blindButtonDisabled$ | async"
-    mat-flat-button
-    color="primary"
-    (click)="blindTransfer()"
-  >
-    Do Blind Transfer
-  </button>
+  <ng-container *ngIf="(selectedTransferMode$ | async) === null">
+    <button
+      [disabled]="blindButtonDisabled$ | async"
+      mat-flat-button
+      color="primary"
+      (click)="blindTransfer()"
+    >
+      Do Blind Transfer
+    </button>
 
+    <button
+      [disabled]="warmButtonDisabled$ | async"
+      mat-flat-button
+      color="primary"
+      (click)="warmTransfer()"
+    >
+      Do Warm Transfer
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="(selectedTransferMode$ | async) === 'warm'">
+    <ng-container
+      *ngIf="
+        isHandoverAllowed$ | async;
+        then consultingButton;
+        else warmTransferButtons
+      "
+    >
+    </ng-container>
+
+    <ng-template #warmTransferButtons>
+      <button mat-flat-button color="primary" (click)="mergeTransfer()">
+        Merge Transfer
+      </button>
+
+      <button mat-flat-button color="primary" (click)="completeWarmTransfer()">
+        Complete Warm Transfer
+      </button>
+    </ng-template>
+
+    <ng-template #consultingButton>
+      <button mat-flat-button color="primary" (click)="handOverCall()">
+        Handover
+      </button>
+    </ng-template>
+  </ng-container>
   <!-- <button
     *ngIf="(transferStage$ | async) === TransferStage.Transferring"
     mat-flat-button
