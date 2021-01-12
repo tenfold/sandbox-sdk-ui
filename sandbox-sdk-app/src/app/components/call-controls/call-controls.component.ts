@@ -52,6 +52,18 @@ export class CallControlsComponent implements OnInit {
     }
   }
 
+  startRecording(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.startRecording(interaction);
+    }
+  }
+
+  stopRecording(interaction: Interaction) {
+    if (isCall(interaction)) {
+      this.connectorService.getSDKService().callControls.stopRecording(interaction);
+    }
+  }
+
   unmute(interaction: Interaction) {
     if (isCall(interaction)) {
       this.connectorService.getSDKService().callControls.unmuteCall(interaction);
