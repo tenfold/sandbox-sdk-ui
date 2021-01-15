@@ -1,16 +1,82 @@
 <ng-container *ngIf="showCallControls$ | async">
-  <p>transfers-section works! {{ interaction.id }}</p>
+  <br />
+  <span *ngIf="agent$ | async as selectedAgent">
+    Selected agent: <b>{{ selectedAgent.label || selectedAgent.name }}</b>
+  </span>
   <app-agent-directory [interaction]="interaction"></app-agent-directory>
 
-  <button
-    [disabled]="blindButtonDisabled$ | async"
-    mat-flat-button
-    color="primary"
-    (click)="blindTransfer()"
-  >
-    Do Blind Transfer
-  </button>
+  <ng-container *ngIf="(selectedTransferMode$ | async) === null">
+    <button
+      [disabled]="blindButtonDisabled$ | async"
+      mat-flat-button
+      color="primary"
+      class="transfer-control-btn"
+      (click)="blindTransfer()"
+    >
+      Do Blind Transfer
+    </button>
 
+    <button
+      [disabled]="warmButtonDisabled$ | async"
+      mat-flat-button
+      color="primary"
+      class="transfer-control-btn"
+      (click)="warmTransfer()"
+    >
+      Do Warm Transfer
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="(selectedTransferMode$ | async) === 'warm'">
+    <ng-container
+      *ngIf="
+        isHandoverAllowed$ | async;
+        then consultingButton;
+        else warmTransferButtons
+      "
+    >
+    </ng-container>
+
+    <ng-template #warmTransferButtons>
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="cancelConference()"
+      >
+        Cancel conference
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="mergeTransfer()"
+      >
+        Merge Transfer
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="completeWarmTransfer()"
+      >
+        Complete Warm Transfer
+      </button>
+    </ng-template>
+
+    <ng-template #consultingButton>
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="handOverCall()"
+      >
+        Handover
+      </button>
+    </ng-template>
+  </ng-container>
   <!-- <button
     *ngIf="(transferStage$ | async) === TransferStage.Transferring"
     mat-flat-button
