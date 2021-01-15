@@ -20,8 +20,10 @@
       (click)="selectAgent(result)"
       class="agent-directory-item"
     >
-      <b>{{ result.label }}</b
-      ><span> of type {{ result.type }}</span>
+      <span>
+        <b>{{ result.label }}</b
+        ><span> of type {{ result.type }}</span>
+      </span>
     </mat-list-item>
   </mat-list>
 </ng-container>

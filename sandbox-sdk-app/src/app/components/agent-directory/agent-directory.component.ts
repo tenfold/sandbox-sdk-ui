@@ -49,7 +49,6 @@ export class AgentDirectoryComponent implements OnInit, OnDestroy {
   }
 
   async selectAgent(result: AgentDirectoryItem) {
-    console.log('selectAgent', result);
     if (result.type === 'skill' || result.type === 'agent') {
       const transferAgent = {
         name: result.label,

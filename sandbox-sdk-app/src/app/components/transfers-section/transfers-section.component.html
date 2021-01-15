@@ -1,4 +1,8 @@
 <ng-container *ngIf="showCallControls$ | async">
+  <br />
+  <span *ngIf="agent$ | async as selectedAgent">
+    Selected agent: <b>{{ selectedAgent.label || selectedAgent.name }}</b>
+  </span>
   <app-agent-directory [interaction]="interaction"></app-agent-directory>
 
   <ng-container *ngIf="(selectedTransferMode$ | async) === null">
@@ -6,6 +10,7 @@
       [disabled]="blindButtonDisabled$ | async"
       mat-flat-button
       color="primary"
+      class="transfer-control-btn"
       (click)="blindTransfer()"
     >
       Do Blind Transfer
@@ -15,6 +20,7 @@
       [disabled]="warmButtonDisabled$ | async"
       mat-flat-button
       color="primary"
+      class="transfer-control-btn"
       (click)="warmTransfer()"
     >
       Do Warm Transfer
@@ -32,17 +38,41 @@
     </ng-container>
 
     <ng-template #warmTransferButtons>
-      <button mat-flat-button color="primary" (click)="mergeTransfer()">
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="cancelConference()"
+      >
+        Cancel conference
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="mergeTransfer()"
+      >
         Merge Transfer
       </button>
 
-      <button mat-flat-button color="primary" (click)="completeWarmTransfer()">
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="completeWarmTransfer()"
+      >
         Complete Warm Transfer
       </button>
     </ng-template>
 
     <ng-template #consultingButton>
-      <button mat-flat-button color="primary" (click)="handOverCall()">
+      <button
+        mat-flat-button
+        color="primary"
+        class="transfer-control-btn"
+        (click)="handOverCall()"
+      >
         Handover
       </button>
     </ng-template>

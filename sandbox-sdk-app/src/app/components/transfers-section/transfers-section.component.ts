@@ -17,6 +17,7 @@ import {
 } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
 
+type TransferMode = 'warm' | 'cold' | null;
 @Component({
   selector: 'app-transfers-section',
   templateUrl: './transfers-section.component.html',
@@ -24,11 +25,21 @@ import { ConnectorService } from 'src/app/services/connector.service';
 })
 export class TransfersSectionComponent implements OnInit, OnDestroy {
 
-  selectedTransferMode$ = new BehaviorSubject<'warm' | 'cold' | null>(null);
+  selectedTransferMode$ = new BehaviorSubject<TransferMode>(null);
+  private set selectedTransferMode(val: TransferMode) {
+    localStorage.setItem(`selectedTransferMode_${this.interaction$.value?.id}`, val);
+    this.selectedTransferMode$.next(val);
+  }
+
   TransferStage = TransferStage;
 
   interaction$ = new BehaviorSubject<Interaction | null>(null);
   @Input() set interaction(value: Interaction | null) {
+    const savedSelectedTransferMode = localStorage.getItem(`selectedTransferMode_${value?.id}`);
+    if (!!savedSelectedTransferMode) {
+      this.selectedTransferMode$.next(
+        (savedSelectedTransferMode === 'null' ? null : savedSelectedTransferMode) as TransferMode);
+    }
     this.interaction$.next(value);
   }
 
@@ -75,10 +86,16 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
         this.agent = agent;
       }),
     ).subscribe();
+
+    this.childCall$.pipe(
+      takeUntil(this.destroySubject$),
+      tap((internalCall) => this.internalCall = internalCall),
+    ).subscribe();
   }
 
   private destroySubject$ = new Subject();
   private agent?: TransferAgent;
+  private internalCall: Call | undefined | null;
   private callControlsAllowed$ = new BehaviorSubject<boolean>(false);
   readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
@@ -124,7 +141,7 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     takeUntil(this.destroySubject$),
     map(([interaction, journey]) => {
       return (interaction as Call).meta?.callTag === 'conference' &&
-        journey.some(transfer => transfer.from.callId === interaction.id)
+        !!journey && journey.some(transfer => transfer.from.callId === interaction.id);
     })
   );
 
@@ -185,19 +202,25 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     await this.connectorService.getSDKService().transfers.blindTransfer(
       this.interaction.id,
       transferOptions);
-    this.selectedTransferMode$.next('cold');
+    this.selectedTransferMode = 'cold';
   }
 
   async warmTransfer() {
-    //   if (isActive(this._internalCall)) {
-    //     return await this.transferService.handleInternalCall(this.callId, {} as TransferOptions);
-    // }
+    if (!isActive(this.internalCall)) {
+      const transferOptions = this.getTransferOptions();
+      await this.connectorService.getSDKService().transfers.handleInternalCall(
+        this.interaction.id,
+        transferOptions);
+      this.selectedTransferMode = 'warm';
+    }
+  }
 
-    const transferOptions = this.getTransferOptions();
-    await this.connectorService.getSDKService().transfers.handleInternalCall(
-      this.interaction.id,
-      transferOptions);
-    this.selectedTransferMode$.next('warm');
+  async cancelConference() {
+    if (isActive(this.internalCall)) {
+      await this.connectorService.getSDKService().transfers.handleInternalCall(
+        this.interaction.id, {} as TransferOptions);
+      this.selectedTransferMode = null;
+    }
   }
 
   async mergeTransfer() {
