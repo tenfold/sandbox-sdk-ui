@@ -58,7 +58,30 @@
   >
     Retrieve
   </button>
-
+  <button
+    *ngIf="
+      !['Cancel', 'Hangup', 'Ringing'].includes(interaction?.status) &&
+      (callControlsEnabled$ | async)
+    "
+    mat-flat-button
+    color="primary"
+    class="call-control-btn"
+    (click)="startRecording(interaction)"
+  >
+    Start Recording
+  </button>
+  <button
+    *ngIf="
+      !['Cancel', 'Hangup', 'Ringing'].includes(interaction?.status) &&
+      (callControlsEnabled$ | async)
+    "
+    mat-flat-button
+    color="primary"
+    class="call-control-btn"
+    (click)="stopRecording(interaction)"
+  >
+    Stop Recording
+  </button>
   <button
     *ngIf="
       !['Cancel', 'Hangup', 'Held', 'Ringing'].includes(interaction?.status) &&
