@@ -29,18 +29,22 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
 
   selectedTransferMode$ = new BehaviorSubject<TransferMode>(null);
   private set selectedTransferMode(val: TransferMode) {
-    localStorage.setItem(`selectedTransferMode_${this.interaction$.value?.id}`, val);
-    this.selectedTransferMode$.next(val);
+    if (val !== this.selectedTransferMode$.value) {
+      localStorage.setItem(`selectedTransferMode_${this.interaction$.value?.id}`, val);
+      this.selectedTransferMode$.next(val);
+    }
   }
 
   TransferStage = TransferStage;
 
   interaction$ = new BehaviorSubject<Interaction | null>(null);
   @Input() set interaction(value: Interaction | null) {
-    const savedSelectedTransferMode = localStorage.getItem(`selectedTransferMode_${value?.id}`);
-    if (!!savedSelectedTransferMode) {
-      this.selectedTransferMode$.next(
-        (savedSelectedTransferMode === 'null' ? null : savedSelectedTransferMode) as TransferMode);
+    if (this.interaction?.id !== value?.id) {
+      const savedSelectedTransferMode = localStorage.getItem(`selectedTransferMode_${value?.id}`);
+      if (!!savedSelectedTransferMode) {
+        this.selectedTransferMode$.next(
+          (savedSelectedTransferMode === 'null' ? null : savedSelectedTransferMode) as TransferMode);
+      }
     }
     this.interaction$.next(value);
   }
