@@ -27,6 +27,7 @@ import { CallControlsComponent } from './components/call-controls/call-controls.
 import { MainViewComponent } from './main-view/main-view.component';
 import { AgentDirectoryComponent } from './components/agent-directory/agent-directory.component';
 import { TransfersSectionComponent } from './components/transfers-section/transfers-section.component';
+import { AttachmentSetterComponent } from './components/attachment-setter/attachment-setter.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { TransfersSectionComponent } from './components/transfers-section/transf
     CallControlsComponent,
     MainViewComponent,
     AgentDirectoryComponent,
-    TransfersSectionComponent
+    TransfersSectionComponent,
+    AttachmentSetterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Set transfer attachment:</h2>
+
+  <mat-form-field class="full-width-input">
+    <input
+      matInput
+      placeholder="Set URL"
+      formControlName="url"
+      autocomplete="off"
+      required
+    />
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" [disabled]="form.invalid">
+    Set it!
+  </button>
+</form>

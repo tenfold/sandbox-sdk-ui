@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Call,
+  CallAttachment,
   Interaction, isActive, isRinging, TransferAgent, TransferOptions, TransferStage
 } from '@tenfold/web-client-sdk';
 import { get, isEqual } from 'lodash';
@@ -12,6 +13,7 @@ import {
   map,
   startWith,
   switchMap,
+
   takeUntil,
   tap
 } from 'rxjs/operators';
@@ -87,6 +89,13 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
       }),
     ).subscribe();
 
+    this.attachment$.pipe(
+      takeUntil(this.destroySubject$),
+      tap((attachment) => {
+        this.attachment = attachment;
+      }),
+    ).subscribe();
+
     this.childCall$.pipe(
       takeUntil(this.destroySubject$),
       tap((internalCall) => this.internalCall = internalCall),
@@ -95,6 +104,7 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
 
   private destroySubject$ = new Subject();
   private agent?: TransferAgent;
+  private attachment?: CallAttachment;
   private internalCall: Call | undefined | null;
   private callControlsAllowed$ = new BehaviorSubject<boolean>(false);
   readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
@@ -158,6 +168,14 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
       takeUntil(this.destroySubject$),
       map((state) => state?.agent),
       distinctUntilChanged((agent1, agent2) => isEqual(agent1, agent2)),
+    );
+  }
+
+  get attachment$() {
+    return this.interactionTransferSubState$.pipe(
+      takeUntil(this.destroySubject$),
+      map((state) => state?.attachment),
+      distinctUntilChanged((attachment1, attachment2) => isEqual(attachment1, attachment2)),
     );
   }
 
@@ -250,11 +268,18 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
   //   }
   // }
 
+  private get attachments(): CallAttachment[] | undefined {
+    if (this.attachment) {
+      return [this.attachment];
+    }
+  }
+
   private getTransferOptions(): TransferOptions {
     const [destination, pbxOptions] = this.getTransferDestination();
+    const attachments = this.attachments;
 
     return {
-      attachments: [], // this.attachments,
+      attachments,
       destination,
       pbxOptions,
     } as TransferOptions;
