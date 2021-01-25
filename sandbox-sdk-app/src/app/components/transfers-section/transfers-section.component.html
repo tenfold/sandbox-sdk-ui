@@ -4,6 +4,7 @@
     Selected agent: <b>{{ selectedAgent.label || selectedAgent.name }}</b>
   </span>
   <app-agent-directory [interaction]="interaction"></app-agent-directory>
+  <app-attachment-setter [interaction]="interaction"></app-attachment-setter>
 
   <ng-container *ngIf="(selectedTransferMode$ | async) === null">
     <button
