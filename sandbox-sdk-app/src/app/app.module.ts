@@ -28,6 +28,7 @@ import { MainViewComponent } from './main-view/main-view.component';
 import { AgentDirectoryComponent } from './components/agent-directory/agent-directory.component';
 import { TransfersSectionComponent } from './components/transfers-section/transfers-section.component';
 import { AttachmentSetterComponent } from './components/attachment-setter/attachment-setter.component';
+import { DtmfDialpadComponent } from './components/dtmf-dialpad/dtmf-dialpad.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AttachmentSetterComponent } from './components/attachment-setter/attach
     MainViewComponent,
     AgentDirectoryComponent,
     TransfersSectionComponent,
-    AttachmentSetterComponent
+    AttachmentSetterComponent,
+    DtmfDialpadComponent
   ],
   imports: [
     BrowserModule,

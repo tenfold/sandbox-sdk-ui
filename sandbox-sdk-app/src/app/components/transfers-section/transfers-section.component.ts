@@ -116,6 +116,11 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
     switchMap(() => this.connectorService.getSDKService().callControls.callControlsEnabled$),
   );
 
+  readonly sendDtmfEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
+    filter((isAuthenticated) => isAuthenticated),
+    switchMap(() => this.connectorService.getSDKService().callControls.sendDtmfEnabled$),
+  );
+
   readonly transfers$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().transfers.transfers$),
