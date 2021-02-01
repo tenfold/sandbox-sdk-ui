@@ -1,0 +1,10 @@
+.dialpad-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  column-gap: 5px;
+  row-gap: 5px;
+  width: 300px;
+  height: 300px;
+  margin: 5px;
+}

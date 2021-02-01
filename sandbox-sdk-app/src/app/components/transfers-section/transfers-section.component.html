@@ -6,6 +6,14 @@
   <app-agent-directory [interaction]="interaction"></app-agent-directory>
   <app-attachment-setter [interaction]="interaction"></app-attachment-setter>
 
+  <app-dtmf-dialpad
+    *ngIf="
+      (transferStage$ | async) === TransferStage.Consulting &&
+      (sendDtmfEnabled$ | async)
+    "
+    [interaction]="interaction"
+  ></app-dtmf-dialpad>
+
   <ng-container *ngIf="(selectedTransferMode$ | async) === null">
     <button
       [disabled]="blindButtonDisabled$ | async"

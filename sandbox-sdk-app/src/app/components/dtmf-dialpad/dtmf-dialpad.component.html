@@ -1,0 +1,21 @@
+<ng-container *ngLet="showDialpad$ | async as showDialpad">
+  <button mat-flat-button color="accent" (click)="toggleShowDialpad()">
+    <ng-container *ngIf="showDialpad"
+      ><mat-icon>chevron_left</mat-icon> Hide DTMF dialpad</ng-container
+    >
+    <ng-container *ngIf="!showDialpad">
+      Show DTMF dialpad <mat-icon>chevron_right</mat-icon></ng-container
+    >
+  </button>
+
+  <div class="dialpad-buttons" *ngIf="showDialpad">
+    <button
+      mat-flat-button
+      color="primary"
+      *ngFor="let number of numbers"
+      (click)="buttonClicked(number)"
+    >
+      {{ number }}
+    </button>
+  </div>
+</ng-container>
