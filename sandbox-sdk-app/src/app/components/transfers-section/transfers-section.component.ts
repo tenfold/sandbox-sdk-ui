@@ -265,6 +265,10 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
       this.interaction.id);
   }
 
+  async switch() {
+    await this.connectorService.getSDKService().callControls.switchCall(this.interaction as Call);
+  }
+
   // async cancelBlindTransfer() {
   //   try {
   //     await this.connectorService.getSDKService().transfers.cancelBlindTransfer(this.interaction.id);
