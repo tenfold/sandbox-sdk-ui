@@ -13,7 +13,6 @@ import {
   map,
   startWith,
   switchMap,
-
   takeUntil,
   tap
 } from 'rxjs/operators';
@@ -112,17 +111,17 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
   private internalCall: Call | undefined | null;
   private callControlsAllowed$ = new BehaviorSubject<boolean>(false);
   readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().callControls.callControlsEnabled$),
   );
 
   readonly sendDtmfEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().callControls.sendDtmfEnabled$),
   );
 
   readonly transfers$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().transfers.transfers$),
     startWith({}),
   );

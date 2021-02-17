@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Interaction } from '@tenfold/web-client-sdk';
 import { Subscription } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
@@ -17,19 +18,19 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
   ) { }
 
   readonly interactions$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactions$.pipe(
-      map((interactions) => interactions.sort((a, b) => b.startTime - a.startTime)),
+      map((interactions: Interaction[]) => interactions.sort((a, b) => b.startTime - a.startTime)),
     )),
   );
 
   readonly statusChange$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactionStatusChange$),
   );
 
   readonly newInteraction$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.newInteraction$),
   );
 
@@ -37,7 +38,7 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
   private statusChangeSub = new Subscription();
   ngOnInit(): void {
     this.statusChangeSub = this.statusChange$.pipe(
-      tap((agentStatus) => {
+      tap((agentStatus: any) => {
         this.snackBar.open(`Interaction #${agentStatus.id} status changed to: ${agentStatus.status}`, 'OK', {
           duration: 5000,
           horizontalPosition: 'center',
@@ -47,7 +48,7 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
     ).subscribe();
 
     this.newInteractionSub = this.newInteraction$.pipe(
-      tap((newInteraction) => {
+      tap((newInteraction: Interaction) => {
         console.log(`New Interaction is here: #${newInteraction.id}`);
         this.snackBar.open(`New Interaction is here: #${newInteraction.id}`, 'OK', {
           duration: 5000,

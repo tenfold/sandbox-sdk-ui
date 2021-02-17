@@ -13,7 +13,7 @@ export class CallControlsComponent implements OnInit {
   @Input() interaction: Interaction;
 
   readonly callControlsEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().callControls.callControlsEnabled$),
   );
 

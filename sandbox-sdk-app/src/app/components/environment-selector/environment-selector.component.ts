@@ -33,7 +33,7 @@ export class EnvironmentSelectorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentEnvironment$.pipe(
       takeUntil(this.destroySubject$),
-      tap((val) => {
+      tap((val: any) => {
         this.environment.setValue(val.environmentUrl);
       }),
     ).subscribe();
