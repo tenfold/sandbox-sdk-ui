@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Call,
   CallAttachment,
+  CallControl,
   Interaction, isActive, isRinging, TransferAgent, TransferOptions, TransferStage
 } from '@tenfold/web-client-sdk';
 import { get, isEqual } from 'lodash';
@@ -117,7 +118,9 @@ export class TransfersSectionComponent implements OnInit, OnDestroy {
 
   readonly sendDtmfEnabled$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated: boolean) => isAuthenticated),
-    switchMap(() => this.connectorService.getSDKService().callControls.sendDtmfEnabled$),
+    switchMap(() => this.connectorService.getSDKService().features.onIntegrationCapabilitySupport(CallControl.SendDtmf).pipe(
+      tap((sendDtmf) => console.log('sendDtmf value', sendDtmf)),
+    )),
   );
 
   readonly transfers$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
