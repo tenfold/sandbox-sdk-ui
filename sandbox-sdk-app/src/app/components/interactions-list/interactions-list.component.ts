@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CallControl } from '@tenfold/web-client-sdk';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, of, Subscription } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
 
@@ -61,21 +61,31 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
 
     const sdkFeatures = this.connectorService.getSDKService().features;
 
-    this.capabilitiesSub = combineLatest([
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Answer),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.BlindTransfer),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.CallRecording),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Conference),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Dial),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.SendDtmf),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Hangup),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Hold),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Mute),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.Switch),
-      sdkFeatures.onIntegrationCapabilitySupport(CallControl.WarmTransfer),
-    ]).subscribe((val: any) => {
-      console.log('[answer, blindTransfer, callRecording, conference, dial, sendDtmf, hangup, hold, mute, switch, warmTransfer]', val);
-    });
+    this.capabilitiesSub =
+
+      this.connectorService.getSDKService().isAuthenticated$.pipe(
+        filter((isAuthenticated: boolean) => isAuthenticated),
+        switchMap((isAuthenticated: boolean) => {
+          if (isAuthenticated) {
+            return combineLatest([
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Answer),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.BlindTransfer),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.CallRecording),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Conference),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Dial),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.SendDtmf),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Hangup),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Hold),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Mute),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.Switch),
+              sdkFeatures.onIntegrationCapabilitySupport(CallControl.WarmTransfer),
+            ]);
+          } else {
+            return of([]);
+          }
+        })).subscribe((val: any) => {
+          console.log('[answer, blindTransfer, callRecording, conference, dial, sendDtmf, hangup, hold, mute, switch, warmTransfer]', val);
+        });
   }
 
   ngOnDestroy() {
