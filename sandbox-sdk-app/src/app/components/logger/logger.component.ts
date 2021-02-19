@@ -18,7 +18,7 @@ export class LoggerComponent implements OnInit, OnDestroy {
   readonly logs$ = this.logsInner$.asObservable();
 
   readonly interactionChange$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
-    filter((isAuthenticated) => isAuthenticated),
+    filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactionChange$),
   );
 
@@ -26,7 +26,7 @@ export class LoggerComponent implements OnInit, OnDestroy {
   private interactionChangeSub = new Subscription();
   ngOnInit(): void {
     this.interactionChangeSub = this.interactionChange$.pipe(
-      tap((changedInteraction) => {
+      tap((changedInteraction: Interaction) => {
         if (this.interactionsMap$.value[changedInteraction.id]) {
           const diffObj = objDiff(changedInteraction, this.interactionsMap$.value[changedInteraction.id]);
           this.prependLog({ title: `Interaction #${changedInteraction.id} changed`, diff: `${JSON.stringify(diffObj, null, '\t')}` });
