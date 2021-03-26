@@ -32,7 +32,7 @@ export class AgentStatusSelectorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentAgentStatus$.pipe(
       takeUntil(this.destroySubject$),
-      tap((val) => {
+      tap((val: AgentStatus | undefined) => {
         this.agentStatus.setValue(val?.id);
       }),
     ).subscribe();

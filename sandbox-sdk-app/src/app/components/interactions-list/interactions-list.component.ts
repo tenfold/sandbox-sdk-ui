@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CallControl } from '@tenfold/web-client-sdk';
+import { CallControl, Interaction } from '@tenfold/web-client-sdk';
 import { combineLatest, of, Subscription } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ConnectorService } from 'src/app/services/connector.service';
@@ -20,7 +20,7 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
   readonly interactions$ = this.connectorService.getSDKService().isAuthenticated$.pipe(
     filter((isAuthenticated: boolean) => isAuthenticated),
     switchMap(() => this.connectorService.getSDKService().interaction.interactions$.pipe(
-      map((interactions) => interactions.sort((a, b) => b.startTime - a.startTime)),
+      map((interactions: Interaction[]) => interactions.sort((a, b) => b.startTime - a.startTime)),
     )),
   );
 
@@ -49,7 +49,7 @@ export class InteractionsListComponent implements OnInit, OnDestroy {
     ).subscribe();
 
     this.newInteractionSub = this.newInteraction$.pipe(
-      tap((newInteraction) => {
+      tap((newInteraction: Interaction) => {
         console.log(`New Interaction is here: #${newInteraction.id}`);
         this.snackBar.open(`New Interaction is here: #${newInteraction.id}`, 'OK', {
           duration: 5000,
