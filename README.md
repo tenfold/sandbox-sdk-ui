@@ -1,8 +1,10 @@
 # SandboxSdkApp
 
-Demo application utilizing the Tenfold SDK
+Demo application utilizing the Tenfold SDK Client Library (https://www.npmjs.com/package/@tenfold/web-client-sdk)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
+
+All below `ng` instructions on `sandbox-sdk-app` directory level.
 
 ## Development server
 
