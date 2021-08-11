@@ -31,9 +31,9 @@
                 </div>
     
                 <div mat-line>
-                    Status: <b>{{ historyItem.status }}</b
-                    >, is child call: <b>{{ !!historyItem?.parentId }}</b>, phone number:
-                    <b>{{ historyItem.phoneNumber }}</b>
+                    Status: <b>{{ historyItem.status }}</b>
+                    , is child call: <b>{{ !!historyItem?.parentId }}</b>
+                    , phone number: <b>{{ historyItem.phoneNumber }}</b>
                     , start time: <b>{{ historyItem.startTime | date: "short" }}</b>
                     <span *ngIf="historyItem.endTime">, end time:</span>
                     <b>{{ historyItem.endTime | date: "short" }}</b>
