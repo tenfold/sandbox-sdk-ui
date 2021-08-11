@@ -1,0 +1,45 @@
+<ng-container *ngLet="history$ | async as history">
+    <mat-expansion-panel
+        [hideToggle]="!history || !history.length"
+    >
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span>
+                    <div *ngIf="!history || !history.length" mat-subheader>No history!</div>
+                    <div *ngIf="!!history && history.length" mat-subheader>Available history ({{ history.length }}):</div>
+                </span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+        <mat-list>
+            <mat-list-item *ngFor="let historyItem of history">
+                <mat-icon
+                    mat-list-icon
+                    *ngIf="historyItem.direction === 'Inbound'"
+                    [title]="historyItem.direction"
+                    >south_east</mat-icon
+                >
+                <mat-icon
+                    mat-list-icon
+                    *ngIf="historyItem.direction === 'Outbound'"
+                    [title]="historyItem.direction"
+                    >north_west</mat-icon
+                >
+    
+                <div mat-line>
+                    <b>{{ historyItem.name }}</b> #{{ historyItem.id }}
+                </div>
+    
+                <div mat-line>
+                    Status: <b>{{ historyItem.status }}</b>
+                    , is child call: <b>{{ !!historyItem?.parentId }}</b>
+                    , phone number: <b>{{ historyItem.phoneNumber }}</b>
+                    , start time: <b>{{ historyItem.startTime | date: "short" }}</b>
+                    <span *ngIf="historyItem.endTime">, end time:</span>
+                    <b>{{ historyItem.endTime | date: "short" }}</b>
+                </div>
+            </mat-list-item>
+        </mat-list>
+
+    </mat-expansion-panel>
+</ng-container>

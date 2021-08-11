@@ -29,6 +29,7 @@ import { AgentDirectoryComponent } from './components/agent-directory/agent-dire
 import { TransfersSectionComponent } from './components/transfers-section/transfers-section.component';
 import { AttachmentSetterComponent } from './components/attachment-setter/attachment-setter.component';
 import { DtmfDialpadComponent } from './components/dtmf-dialpad/dtmf-dialpad.component';
+import { CallHistoryComponent } from './components/call-history/call-history.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DtmfDialpadComponent } from './components/dtmf-dialpad/dtmf-dialpad.com
     AgentDirectoryComponent,
     TransfersSectionComponent,
     AttachmentSetterComponent,
-    DtmfDialpadComponent
+    DtmfDialpadComponent,
+    CallHistoryComponent,
   ],
   imports: [
     BrowserModule,

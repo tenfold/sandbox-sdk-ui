@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AgentDirectoryItem, AgentDirectoryType, Interaction, TransferAgent } from '@tenfold/web-client-sdk';
+import { AgentDirectoryItem, Interaction, TransferAgent } from '@tenfold/web-client-sdk';
+import { DirectoryEntryType } from '@tenfold/tenfold-types';
 import { last } from 'lodash';
 import { Subject } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
@@ -90,7 +91,7 @@ export class AgentDirectoryComponent implements OnInit, OnDestroy {
   }
 
   async itemClicked(result: AgentDirectoryItem) {
-    if (result.type === AgentDirectoryType.Skill || result.type === AgentDirectoryType.Agent) {
+    if (result.type === DirectoryEntryType.Skill || result.type === DirectoryEntryType.Agent) {
       this.selectAgent(result);
     } else {
       this.goNext(result);
