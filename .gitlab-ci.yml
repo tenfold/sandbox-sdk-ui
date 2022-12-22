@@ -1,0 +1,81 @@
+stages:
+  - install
+  - tests-unit
+  - test-lint
+  - test-e2e
+  - build
+
+image: 
+    name: cypress/browsers:node12.19.0-chrome86-ff82
+    pull_policy: if-not-present
+
+install-job:
+  stage: install
+  script:
+    - cd ./sandbox-sdk-app
+    - npm install
+    - npm install -g @angular/cli
+  artifacts:
+    paths: 
+      - ./sandbox-sdk-app/node_modules
+  tags:
+    - Tenfold
+  only:
+    - branches
+    - merge_requests
+    - tags
+
+tests-unit-job:
+  stage: tests-unit
+  needs: [ install-job ]
+  script:
+    - cd ./sandbox-sdk-app
+    - npm run test
+  tags:
+    - Tenfold
+  only:
+    - branches
+    - merge_requests
+    - tags
+
+test-lint-job:
+  stage: test-lint
+  needs: [ install-job, tests-unit-job ]
+  script:
+    - cd ./sandbox-sdk-app
+    - npm run lint
+  tags:
+    - Tenfold
+  only:
+    - branches
+    - merge_requests
+    - tags
+
+test-e2e-job:
+  stage: test-e2e
+  needs: [ install-job, tests-unit-job, test-lint-job ]
+  script:
+    - cd ./sandbox-sdk-app
+    - ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 86.0.4240.193
+    - npm run e2e
+  tags:
+    - Tenfold
+  only:
+    - branches
+    - merge_requests
+    - tags
+
+build-job:
+  stage: build
+  needs: [ install-job, tests-unit-job, test-lint-job, test-e2e-job ]
+  script:
+    - cd ./sandbox-sdk-app
+    - npm run build --prod
+  variables:
+    codecov_token: $codecov_token
+  tags:
+    - Tenfold
+  only:
+    - branches
+    - merge_requests
+    - tags
